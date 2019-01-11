@@ -37,7 +37,7 @@ checkport() {
 
 			echo -e "${RED_B}[-]${RESET} Invalid port. Please specify a valid port number." >&2
 			exit 1
-			
+
 		else
 			echo "$port"
 		fi
@@ -146,6 +146,8 @@ if [ "$(id -u)" != "0" ]; then
 	exit 1
 fi
 
+# enables routing, which is required for forwarding traffic.
+echo 1 > /proc/sys/net/ipv4/ip_forward 
 
 while [ "$1" != "" ]; do
 	case $1 in
