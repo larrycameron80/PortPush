@@ -37,7 +37,7 @@ checkport() {
 
 			echo -e "${RED_B}[-]${RESET} Invalid port. Please specify a valid port number." >&2
 			exit 1
-
+			
 		else
 			echo "$port"
 		fi
@@ -150,41 +150,55 @@ fi
 while [ "$1" != "" ]; do
 	case $1 in
 
-		-h | --help)	  		printusage
-						  		exit 1
-						  		;;
+		-h | --help)
 
-		-i | --interface) 		shift
-						  		INTERFACE=$(checkinterface "$1")
-						  		IP_ADDR=$(ip addr show dev "$INTERFACE" | egrep -o "\w{1,3}\.\w{1,3}\.\w{1,3}\.\w{1,3}/\w{1,2}" | cut -d "/" -f  1)
-								;;
+			printusage
+			exit 1
+			;;
 
-		-p | --target-port) 	shift
-								TARGET_PORT=$(checkport "$1")
-					      		;;
+		-i | --interface) 		
+			
+			shift
+			INTERFACE=$(checkinterface "$1")
+			IP_ADDR=$(ip addr show dev "$INTERFACE" | egrep -o "\w{1,3}\.\w{1,3}\.\w{1,3}\.\w{1,3}/\w{1,2}" | cut -d "/" -f  1)
+			;;
 
-		-l | --listen-port)		shift
-								LISTEN_PORT=$(checkport "$1")
-								;; 
+		-p | --target-port) 	
+			
+			shift
+			TARGET_PORT=$(checkport "$1")
+			;;
 
-		-t | --target-ip)		shift
-								TARGET=$(checktarget "$1")
-								;;
+		-l | --listen-port)		
 
-		-d | --delete)			shift
-								deleterule "$1"
-								;;
+			shift
+			LISTEN_PORT=$(checkport "$1")
+			;; 
+
+		-t | --target-ip)	
+			
+			shift
+			TARGET=$(checktarget "$1")
+			;;
+
+		-d | --delete)			
+
+			shift
+			deleterule "$1"
+			;;
 		
-		-f | --flush)			FLUSH_RULES=1
-								;;
+		-f | --flush)			
 
-		-L | --list)			listrules
-								exit 1
-								;;
+			FLUSH_RULES=1
+			;;
 
+		-L | --list)			
+
+			listrules
+			exit 1
+			;;
 	esac
 	shift
-
 done
 
 #verifies the user actually wants to flush the rules
