@@ -133,6 +133,10 @@ function addRule {
 	}
 }
 
+function listRules {
+	netsh interface portproxy show v4tov4
+}
+
 # This is the function users should be calling. Sub-functions can be called directly, but it is not encouraged.
 function winPortPush {
 	param( [switch]$list, [switch]$flush, [switch]$delete, [int]$lPort, [int]$tPort, [string]$listenIP, [string]$targetIP )
